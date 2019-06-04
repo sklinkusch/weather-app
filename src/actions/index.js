@@ -32,10 +32,7 @@ export function fetchRequest(lat, lng) {
     dispatch(fetch_request());
     return fetch(`https://darksky.sklinkusch.now.sh/?${lat},${lng}`)
       .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        return dispatch(fetch_success(data));
-      })
+      .then(data => dispatch(fetch_success(data)))
       .catch(error => dispatch(fetch_error(error)));
   }
 }
