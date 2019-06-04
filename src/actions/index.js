@@ -1,7 +1,7 @@
 // action types - fetching data
-const FETCH_REQUEST = "FETCH_REQUEST";
-const FETCH_SUCCESS = "FETCH_SUCCESS";
-const FETCH_ERROR = "FETCH_ERROR";
+export const FETCH_REQUEST = "FETCH_REQUEST";
+export const FETCH_SUCCESS = "FETCH_SUCCESS";
+export const FETCH_ERROR = "FETCH_ERROR";
 // action types - get geolocation
 // const GEO_REQUEST = "GEO_REQUEST";
 // const GEO_SUCCESS = "GEO_SUCCESS";

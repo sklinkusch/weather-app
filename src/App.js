@@ -31,9 +31,7 @@ class App extends Component {
       const {
         coords: { latitude, longitude }
       } = coords;
-      console.log(latitude, longitude);
       await getWeather(latitude, longitude);
-      console.log("Weather done");
       // this.setState({ weather, loading: false });
     }
   }
