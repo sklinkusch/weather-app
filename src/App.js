@@ -1,11 +1,14 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
+import { fetchRequest } from "./actions";
+import { store } from "./index";
 
 class App extends Component {
-  state = {
-    loading: true,
-    error: null,
-    weather: null
-  };
+  // state = {
+  //   loading: true,
+  //   error: null,
+  //   weather: null
+  // };
 
   async componentDidMount() {
     let coords;
@@ -28,13 +31,15 @@ class App extends Component {
       const {
         coords: { latitude, longitude }
       } = coords;
-      const weather = await getWeather(latitude, longitude);
-      this.setState({ weather, loading: false });
+      console.log(latitude, longitude);
+      await getWeather(latitude, longitude);
+      console.log("Weather done");
+      // this.setState({ weather, loading: false });
     }
   }
 
   render() {
-    const { weather, loading, error } = this.state;
+    const { weather, loading, error } = this.props;
 
     return (
       <div className="App">
@@ -57,12 +62,21 @@ const getCords = options => {
 };
 
 const getWeather = async (lat, long) => {
-  const weatherResp = await fetch(
-    `https://dci-fbw12-darksky.now.sh/?${lat},${long}`
-  );
-  const weather = await weatherResp.json();
+  // const weatherResp = await fetch(
+  //   `https://dci-fbw12-darksky.now.sh/?${lat},${long}`
+  // );
+  // const weather = await weatherResp.json();
 
-  return weather;
+  // return weather;
+  await store.dispatch(fetchRequest(lat, long));
 };
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    loading: state.loading,
+    weather: state.weather,
+    error: state.error
+  };
+}
+
+export default connect(mapStateToProps)(App);
