@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { fetchRequest } from "./actions";
-import { store } from "./index";
+import { FETCH_SUCCESS } from "./actions";
 
 class App extends Component {
   // state = {
@@ -31,7 +30,7 @@ class App extends Component {
       const {
         coords: { latitude, longitude }
       } = coords;
-      await getWeather(latitude, longitude);
+      await this.props.getData(latitude, longitude);
       // this.setState({ weather, loading: false });
     }
   }
@@ -59,16 +58,6 @@ const getCords = options => {
   });
 };
 
-const getWeather = async (lat, long) => {
-  // const weatherResp = await fetch(
-  //   `https://dci-fbw12-darksky.now.sh/?${lat},${long}`
-  // );
-  // const weather = await weatherResp.json();
-
-  // return weather;
-  await store.dispatch(fetchRequest(lat, long));
-};
-
 const mapStateToProps = (state) => {
   return {
     loading: state.loading,
@@ -77,4 +66,10 @@ const mapStateToProps = (state) => {
   };
 }
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = dispatch => {
+  return {
+    getData: (lat, lng) => dispatch({ type: FETCH_SUCCESS, lat, lng })
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
