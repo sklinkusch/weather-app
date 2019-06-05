@@ -1,14 +1,17 @@
-import { takeLatest, call, put } from "redux-saga/effects";
+import { takeEvery, call, put } from "redux-saga/effects";
 import axios from "axios";
 import { FETCH_REQUEST, FETCH_SUCCESS, FETCH_ERROR } from "../actions/"
 
 export function* watcherSaga() {
-  yield takeLatest(FETCH_REQUEST, workerSaga);
+  yield takeEvery(FETCH_REQUEST, workerSaga);
 }
 
-function* workerSaga(lat, lng) {
+function* workerSaga(action) {
   try {
-    const weather = yield call(() => fetchWeather(lat, lng));
+    const { lat, lng } = action;
+    const response = yield call(() => fetchWeather(lat, lng));
+    const weather = response.data;
+    console.log(weather);
     yield put({ type: FETCH_SUCCESS, weather });
   } catch (error) {
     yield put({ type: FETCH_ERROR, error });

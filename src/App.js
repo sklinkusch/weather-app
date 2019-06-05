@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { FETCH_SUCCESS } from "./actions";
+import { FETCH_REQUEST } from "./actions";
 
 class App extends Component {
   // state = {
@@ -42,7 +42,7 @@ class App extends Component {
       <div className="App">
         {loading && <div>Loading...</div>}
         {error && <div>{error}</div>}
-        {weather && <Temp temp={weather.currently.apparentTemperature} />}
+        {weather && <Temp temp={this.props.weather.currently.temperature} />}
       </div>
     );
   }
@@ -68,7 +68,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getData: (lat, lng) => dispatch({ type: FETCH_SUCCESS, lat, lng })
+    getData: (lat, lng) => dispatch({ type: FETCH_REQUEST, lat, lng })
   }
 }
 
