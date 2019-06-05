@@ -11,7 +11,6 @@ function* workerSaga(action) {
     const { lat, lng } = action;
     const response = yield call(() => fetchWeather(lat, lng));
     const weather = response.data;
-    console.log(weather);
     yield put({ type: FETCH_SUCCESS, weather });
   } catch (error) {
     yield put({ type: FETCH_ERROR, error });
